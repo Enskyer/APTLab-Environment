@@ -10,6 +10,6 @@ If (-not (Test-Path "C:\ProgramData\chocolatey")) {
 }
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Installing Chocolatey extras..."
-choco install -y --limit-output --no-progress wireshark winpcap
+choco install -y --limit-output --no-progress wireshark winpcap vscode
 
 Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Choco addons complete!"

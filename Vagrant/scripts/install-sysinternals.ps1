@@ -108,8 +108,8 @@ if (Get-Process -ProcessName explorer -ErrorAction 'silentlycontinue') {
 }
 
 # Download Olaf Hartongs Sysmon config
-Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Olaf Hartong's Sysmon config..."
-(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/olafhartong/sysmon-modular/master/sysmonconfig.xml', "$sysmonConfigPath")
+Write-Host "$('[{0:HH:mm}]' -f (Get-Date)) Downloading Olaf Hartong's Sysmon config (stavhaygn's APTLab version)..."
+(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/stavhaygn/sysmon-modular/master/sysmonconfig.xml', "$sysmonConfigPath")
 # Alternative: Download SwiftOnSecurity's Sysmon config
 # Write-Host "Downloading SwiftOnSecurity's Sysmon config..."
 # (New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml', "$sysmonConfigPath")
