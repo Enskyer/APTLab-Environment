@@ -1,95 +1,12 @@
 {
   "builders": [
     {
-      "vm_name": "WindowsServer2016",
-      "type": "vmware-iso",
-      "communicator": "winrm",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": false,
-      "boot_wait": "2m",
-      "winrm_username": "vagrant",
-      "winrm_password": "vagrant",
-      "winrm_timeout": "4h",
-      "shutdown_timeout": "2h",
-      "shutdown_command": "a:/sysprep.bat",
-      "guest_os_type": "windows8srv-64",
-      "disk_size": 61440,
-      "vnc_port_min": 5900,
-      "vnc_port_max": 5980,
-      "version": 11,
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./floppy/WindowsPowershell.lnk",
-        "./floppy/PinTo10.exe",
-        "./scripts/unattend.xml",
-        "./scripts/sysprep.bat",
-        "./scripts/disable-screensaver.ps1",
-        "./scripts/disable-winrm.ps1",
-        "./scripts/enable-winrm.ps1",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/install-credssp-fix.ps1"
-      ],
-      "vmx_data": {
-        "RemoteDisplay.vnc.enabled": "false",
-        "RemoteDisplay.vnc.port": "5900",
-        "memsize": "2048",
-        "numvcpus": "2",
-        "scsi0.virtualDev": "lsisas1068"
-      }
-    },
-    {
-      "vm_name": "WindowsServer2016",
-      "type": "virtualbox-iso",
-      "communicator": "winrm",
-      "iso_url": "{{user `iso_url`}}",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": false,
-      "boot_wait": "2m",
-      "winrm_username": "vagrant",
-      "winrm_password": "vagrant",
-      "winrm_timeout": "4h",
-      "shutdown_command": "a:/sysprep.bat",
-      "guest_os_type": "Windows2016_64",
-      "guest_additions_mode": "disable",
-      "disk_size": 61440,
-      "floppy_files": [
-        "{{user `autounattend`}}",
-        "./floppy/WindowsPowershell.lnk",
-        "./floppy/PinTo10.exe",
-        "./scripts/unattend.xml",
-        "./scripts/sysprep.bat",
-        "./scripts/disable-screensaver.ps1",
-        "./scripts/disable-winrm.ps1",
-        "./scripts/enable-winrm.ps1",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/oracle-cert.cer",
-        "./scripts/install-credssp-fix.ps1"
-      ],
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "2"
-        ]
-      ]
-    },
-    {
       "type": "qemu",
       "vm_name": "WindowsServer2016",
       "communicator": "winrm",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": false,
+      "headless": true,
       "boot_wait": "6m",
       "boot_command": "",
       "winrm_username": "vagrant",
@@ -103,11 +20,11 @@
       "qemuargs": [
         [
           "-m",
-          "2048"
+          "4096"
         ],
         [
           "-smp",
-          "2"
+          "4"
         ],
         [
           "-drive",
