@@ -1,8 +1,12 @@
 Vagrant.configure("2") do |config|
   config.vm.define "helk" do |cfg|
-    cfg.vm.box = "bento/ubuntu-20.04"
+    cfg.vm.box = "generic/debian11"
     cfg.vm.hostname = "helk"
-    cfg.vm.provision :shell, path: "helk_bootstrap.sh"
+    cfg.vm.provision "shell", path: "fix_nameserver.sh"
+    cfg.vm.provision "shell", inline: "apt-get -qq update"
+    cfg.vm.provision "shell", path: "install_docker.sh"
+    cfg.vm.provision "shell", path: "install_docker_compose.sh"
+    cfg.vm.provision "shell", path: "install_aptlab-helk.sh", args: ["192.168.57.105"]
     cfg.vm.network :private_network, ip: "192.168.57.105", gateway: "192.168.57.1", dns: "8.8.8.8"
 
     cfg.vm.provider "libvirt" do |lv, override|
@@ -22,13 +26,12 @@ Vagrant.configure("2") do |config|
       # Which storage pool path to use. Default to /var/lib/libvirt/images or ~/.local/share/libvirt/images depending on if you are running a system or user QEMU/KVM session.
       #libvirt.storage_pool_path = '/media/storage_nvme/system_session_vm_pool'
       lv.storage_pool_name = 'default'
-      override.vm.box = "generic/ubuntu2004"
-      override.vm.synced_folder './', '/vagrant', type: 'rsync' 
+      override.vm.synced_folder './', '/vagrant', disabled: true 
     end
   end
 
   config.vm.define "win10" do |cfg|
-    cfg.vm.box = "detectionlab/win10"
+    cfg.vm.box = "windows_10_libvirt"
     cfg.vm.hostname = "win10"
     cfg.vm.boot_timeout = 1200
     cfg.vm.communicator = "winrm"
@@ -52,11 +55,11 @@ Vagrant.configure("2") do |config|
       lv.graphics_type = "spice"
       lv.video_type = "qxl"
       lv.input :type => "tablet", :bus => "usb"
-      override.vm.box = "windows_10_libvirt"
       lv.video_vram = 32768
       lv.memory = 4096
       lv.cpus = 4
       override.vm.synced_folder '.', '/', type: 'winrm' 
     end
   end
+
 end
