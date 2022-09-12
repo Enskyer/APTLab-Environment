@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
       lv.default_prefix = "APT-Lab_"
       lv.graphics_type = "vnc"
       lv.video_type = "vga"
-      lv.input :type => "tablet", :bus => "usb"
+      lv.input type: "tablet", bus: "usb"
       lv.video_vram = 32768
       lv.memory = 20480
       lv.cpus = 6
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       lv.default_prefix = "APT-Lab_"
       lv.graphics_type = "spice"
       lv.video_type = "qxl"
-      lv.input :type => "tablet", :bus => "usb"
+      lv.input type: "tablet", bus: "usb"
       lv.video_vram = 32768
       lv.memory = 4096
       lv.cpus = 4
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
       lv.default_prefix = "APT-Lab_"
       lv.graphics_type = "vnc"
       lv.video_type = "vga"
-      lv.input :type => "tablet", :bus => "usb"
+      lv.input type: "tablet", bus: "usb"
       lv.video_vram = 32768
       lv.memory = 8192
       lv.cpus = 4
@@ -110,7 +110,7 @@ Vagrant.configure("2") do |config|
       lv.default_prefix = "APT-Lab_"
       lv.graphics_type = "vnc"
       lv.video_type = "vga"
-      lv.input :type => "tablet", :bus => "usb"
+      lv.input type: "tablet", bus: "usb"
       lv.video_vram = 32768
       lv.memory = 8192
       lv.cpus = 2
