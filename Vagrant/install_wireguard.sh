@@ -21,7 +21,7 @@ install_wireguard() {
 
   WIREGUARD_ENV="PUID=1000\nPGID=1000\nTZ=\"Asia/Taipei\"\nSERVERURL=\"$SERVERURL\"\nSERVERPORT=$SERVERPORT\nPEERS=$PEERS\nPEERDNS=\"8.8.8.8\"\nINTERNAL_SUBNET=\"10.13.13.0\"\nALLOWEDIPS=\"10.13.13.0/24$ADDITIONAL_ALLOWEDIPS\"" 
   echo -e $WIREGUARD_ENV | tee .wireguard.env
-  docker-compose up -d
+  docker compose up -d
   sleep 1
 
   i=0
