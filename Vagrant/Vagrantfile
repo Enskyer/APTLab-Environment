@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
       lv.video_type = "vga"
       lv.input type: "tablet", bus: "usb"
       lv.video_vram = 32768
-      lv.memory = 20480
+      lv.memory = 8192
       lv.cpus = 6
       # This is required for Vagrant to properly configure the network interfaces.
       # See https://github.com/clong/DetectionLab/wiki/LibVirt-Support for more information
@@ -89,37 +89,37 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "vpn" do |cfg|
-    cfg.vm.box = "generic/debian11"
-    cfg.vm.hostname = "vpn"
-    cfg.vm.provision "shell", path: "fix_nameserver.sh"
-    cfg.vm.provision "shell", path: "fix_eth2_to_public_ip.sh", args: ["192.168.1.1", "255.255.255.0", "192.168.1.254"]
-    cfg.vm.provision "shell", inline: "apt-get -qq update"
-    cfg.vm.provision "shell", path: "install_docker.sh"
-    cfg.vm.provision "shell", path: "install_docker_compose.sh"
-    cfg.vm.provision "shell", path: "install_wireguard.sh", args: ["192.168.1.1", 51820, 6, "192.168.57.0/24"]
-    cfg.vm.provision "shell", path: "set_iptables_to_deny_eth2.sh"
-    cfg.vm.provision "shell", inline: "PASSWORD=$(echo $RANDOM | sha256sum | head -c 12) && echo \"vagrant:$PASSWORD\" | chpasswd "
-    cfg.vm.network "private_network", ip: "192.168.57.235", gateway: "192.168.57.1", dns: "8.8.8.8"
-    # vagrant-libvirt only support TCP protocol for forwarded ports
-    # See https://github.com/vagrant-libvirt/vagrant-libvirt#forwarded-ports= for more information
-    # cfg.vm.network "forwarded_port", guest: 51820, host: 51820, host_ip: "0.0.0.0", protocol: "udp"
-    cfg.vm.network "public_network", dev: "eno1", auto_config: false
+  # config.vm.define "vpn" do |cfg|
+  #   cfg.vm.box = "generic/debian11"
+  #   cfg.vm.hostname = "vpn"
+  #   cfg.vm.provision "shell", path: "fix_nameserver.sh"
+  #   cfg.vm.provision "shell", path: "fix_eth2_to_public_ip.sh", args: ["192.168.1.1", "255.255.255.0", "192.168.1.254"]
+  #   cfg.vm.provision "shell", inline: "apt-get -qq update"
+  #   cfg.vm.provision "shell", path: "install_docker.sh"
+  #   cfg.vm.provision "shell", path: "install_docker_compose.sh"
+  #   cfg.vm.provision "shell", path: "install_wireguard.sh", args: ["192.168.1.1", 51820, 6, "192.168.57.0/24"]
+  #   cfg.vm.provision "shell", path: "set_iptables_to_deny_eth2.sh"
+  #   cfg.vm.provision "shell", inline: "PASSWORD=$(echo $RANDOM | sha256sum | head -c 12) && echo \"vagrant:$PASSWORD\" | chpasswd "
+  #   cfg.vm.network "private_network", ip: "192.168.57.235", gateway: "192.168.57.1", dns: "8.8.8.8"
+  #   # vagrant-libvirt only support TCP protocol for forwarded ports
+  #   # See https://github.com/vagrant-libvirt/vagrant-libvirt#forwarded-ports= for more information
+  #   # cfg.vm.network "forwarded_port", guest: 51820, host: 51820, host_ip: "0.0.0.0", protocol: "udp"
+  #   cfg.vm.network "public_network", dev: "eno1", auto_config: false
 
-    cfg.vm.provider "libvirt" do |lv, override|
-      lv.default_prefix = "APT-Lab_"
-      lv.graphics_type = "vnc"
-      lv.video_type = "vga"
-      lv.input type: "tablet", bus: "usb"
-      lv.video_vram = 32768
-      lv.memory = 8192
-      lv.cpus = 2
-      lv.management_network_name = "VagrantMgmt"
-      lv.management_network_address = "192.168.123.0/24"
-      lv.management_network_mode = "none"
-      lv.cpu_mode = "host-passthrough"
-      lv.storage_pool_name = 'default'
-      override.vm.synced_folder './', '/vagrant', disabled: true
-    end
-  end
+  #   cfg.vm.provider "libvirt" do |lv, override|
+  #     lv.default_prefix = "APT-Lab_"
+  #     lv.graphics_type = "vnc"
+  #     lv.video_type = "vga"
+  #     lv.input type: "tablet", bus: "usb"
+  #     lv.video_vram = 32768
+  #     lv.memory = 8192
+  #     lv.cpus = 2
+  #     lv.management_network_name = "VagrantMgmt"
+  #     lv.management_network_address = "192.168.123.0/24"
+  #     lv.management_network_mode = "none"
+  #     lv.cpu_mode = "host-passthrough"
+  #     lv.storage_pool_name = 'default'
+  #     override.vm.synced_folder './', '/vagrant', disabled: true
+  #   end
+  # end
 end
